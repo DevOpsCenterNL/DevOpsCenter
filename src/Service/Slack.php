@@ -33,7 +33,7 @@ class Slack
         $this->team = $team;
         $this->token = $token;
 
-//        $this->refresh();
+        $this->refresh();
     }
 
     /**
@@ -80,16 +80,16 @@ class Slack
      */
     public function getUserCount()
     {
-//        $total = 0;
-//        $active = 0;
-//
-//        foreach ($this->info['users'] as $user) {
-//            $total++;
-//            if ($user['presence'] == 'active') {
-//                $active++;
-//            }
-//        }
-        return array('total' => 2, 'active' => 2);
+        $total = 0;
+        $active = 0;
+
+        foreach ($this->info['users'] as $user) {
+            $total++;
+            if ($user['presence'] == 'active') {
+                $active++;
+            }
+        }
+        return array('total' => $total, 'active' => $active);
     }
 
     /**

@@ -45,6 +45,17 @@
                     </button>
                 </div>
             </form>
+            <hr>
+            <p>Current users:</p>
+            <table class="avatar">
+                {% for row in avatars|batch(11) %}
+                    <tr>
+                        {% for name,avatar in row %}
+                            <td><img src="{{ avatar }}" alt="{{ name }}" name="{{ name }}" title="{{ name }}"></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
     </div>
 {% endblock %}
