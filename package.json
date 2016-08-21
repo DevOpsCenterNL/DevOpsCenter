@@ -1,0 +1,31 @@
+{
+  "name": "devopscenter-website",
+  "version": "1.0.0",
+  "description": "DevOpsCenter website",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DevOpsCenterNL/DevOpsCenter.git"
+  },
+  "author": "Roberto Gardenier <roberto@caroga.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DevOpsCenterNL/DevOpsCenter/issues"
+  },
+  "homepage": "https://www.devopscenter.nl",
+  "devDependencies": {
+    "bootstrap-less": "^3.3.8",
+    "font-awesome": "^4.6.3",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.9",
+    "jquery": "^3.1.0"
+  }
+}
