@@ -14,7 +14,8 @@ var gulp = require('gulp'),
     ],
     jsPaths = [
         vendor + "/jquery/dist/jquery.min.js",
-        vendor + "/bootstrap-less/js/bootstrap.min.js"
+        vendor + "/bootstrap-less/js/bootstrap.min.js",
+        "./src/Resources/js/app.js"
     ],
     fontPaths = [
         vendor + '/font-awesome/fonts/**/*.{ttf,woff,woff2,eof,svg}',
@@ -35,7 +36,7 @@ gulp.task('compile-js', function () {
  * Compiles our LESS files to our web folder.
  **/
 gulp.task('compile-less', function () {
-    return gulp.src('./src/resources/less/style.less')
+    return gulp.src('./src/Resources/less/style.less')
         .pipe(less({
             paths: lessPaths
         }))
@@ -52,5 +53,15 @@ gulp.task('copy-fonts', function () {
         .pipe(gulp.dest('./web/fonts'));
 });
 
+
+gulp.task('watch', function () {
+    gulp.watch([
+        './src/Resources/less/*.less',
+        './src/Resources/js/app.js'
+    ], [
+        'compile-less',
+        'compile-js'
+    ]);
+});
 
 gulp.task('default', ['compile-less', 'compile-js', 'copy-fonts']);

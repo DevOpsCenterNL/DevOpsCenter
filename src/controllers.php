@@ -1,18 +1,28 @@
 <?php
 
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Validator\Constraints\Email;
 
-//Request::setTrustedProxies(array('127.0.0.1'));
+$app->match('/', function (Request $request) use ($app) {
 
-$app->get('/', function () use ($app) {
-    return $app['twig']->render('index.html.twig', array());
-})
-->bind('homepage')
-;
+
+    /** @var \Symfony\Component\Form\Form $form */
+    $form = $app['form.factory']->createBuilder(FormType::class, ['email' => ''])
+        ->add('email', TextType::class, array(
+            'constraints' => new Email(),
+            'attr' => array('class' => 'form-control', 'placeholder' => 'your@email.com')
+        ))
+        ->getForm();
+    if ($form->isValid()) {
+        $data = $form->getData();
+        var_dump($data);
+    }
+    $form->handleRequest($request);
+    return $app['twig']->render('index.html.twig', ['form' => $form->createView(), 'slack' => $app['slack']]);
+})->bind('homepage');
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
@@ -21,9 +31,9 @@ $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 
     // 404.html, or 40x.html, or 4xx.html, or error.html
     $templates = array(
-        'errors/'.$code.'.html.twig',
-        'errors/'.substr($code, 0, 2).'x.html.twig',
-        'errors/'.substr($code, 0, 1).'xx.html.twig',
+        'errors/' . $code . '.html.twig',
+        'errors/' . substr($code, 0, 2) . 'x.html.twig',
+        'errors/' . substr($code, 0, 1) . 'xx.html.twig',
         'errors/default.html.twig',
     );
 

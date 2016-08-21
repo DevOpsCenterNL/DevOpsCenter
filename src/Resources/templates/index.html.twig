@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-offset-2 col-md-8">
+            <h3>Waarom DevOpsCenter?</h3>
+            <p>DevOpsCenter is een Slack team opgericht met het doel om een thuisbasis te vormen voor DevOps Developers
+                en DevOps Usergroups binnen Nederland.
+                Dit initiatief is ge&iuml;nspireerd door de oprichting van PHPNL's Slack team.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-2 col-md-8">
+            <hr>
+            <h3>Aanmelden</h3>
+            <p>Iedereen is welkom in het Slack team. Via onderstaand formulier kan je een invite aanvragen om daarna
+                zelf een account te kunnen aanmaken voor het Slack team van DevOpsCenter.
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block signupform %}
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-4  col-xs-offset-2 col-xs-8 text-center">
+            <hr>
+            <p>Join <b>{{ slack.getTeamName }}</b> on Slack.</p>
+            <p class="small">
+                <b class="active">{{ slack.getUserCount['active'] }}</b> users online now of <b
+                        class="total">{{ slack.getUserCount['total'] }}</b> registered.
+            </p>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-offset-4 col-lg-4  col-xs-offset-2 col-xs-8 text-center">
+            <form action="{{ path('homepage') }}" method="post">
+                <div class="row">
+                    <div class="form-group">
+                        {{ form_widget(form) }}
+                    </div>
+                    <button id="submitbutton" type="submit" class="btn btn-block btn-success"
+                            data-target="{{ path('homepage') }}">
+                        <span class="glyphicon glyphicon-hand-right"></span> Send invite
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

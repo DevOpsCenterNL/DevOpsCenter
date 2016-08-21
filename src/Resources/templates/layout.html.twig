@@ -12,18 +12,23 @@
     <![endif]-->
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <img class="img-responsive img-rounded" src="http://placehold.it/1200x350" alt="">
+<header>
+    <div class="container">
+        <div class="col-lg-12">
+            <h1>DevOpsCenter</h1>
+            <hr class="short">
+            <h2>H&eacute;t platform voor DevOps Developers/Engineers in Nederland!</h2>
         </div>
     </div>
-    <hr>
-
+</header>
+<div class="container">
     {% block content %}
     {% endblock %}
+    {% block signupform %}
+    {% endblock %}
 </div>
-<footer class="footer">
+<br>
+<footer>
     <div class="container">
         <p class="text-center small text-muted">
             Copyright {{ "now"|date('Y') }} &copy; DevOpsCenter.nl | No developers were harmed in the making of this
@@ -31,12 +36,6 @@
         </p>
     </div>
 </footer>
-
 <script src="{{ asset('js/app.min.js') }}"></script>
-{#{% if app.environment == 'prod' %}#}
-{#<script>#}
-{#// include google analytics here#}
-{#</script>#}
-{#{% endif %}#}
 </body>
 </html>
