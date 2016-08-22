@@ -21,8 +21,15 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'translator.domains' => array(),
 ));
 
-$app['slack'] = function() use ($app) {
-    return new Slack($app['slack.team'], $app['slack.token']);
+$app->register(new Moust\Silex\Provider\CacheServiceProvider(), array(
+    'cache.options' => array(
+        'driver' => 'file',
+        'cache_dir' => __DIR__ . '/../var/cache/slack'
+    )
+));
+
+$app['slack'] = function () use ($app) {
+    return new Slack($app['slack.team'], $app['slack.token'], $app['cache']);
 };
 
 $app['twig'] = $app->extend('twig', function ($twig, $app) {

@@ -9,29 +9,52 @@ namespace DevOpsCenter\Service;
 class Slack
 {
     /**
+     * Contains name of the slack team
      * @var string
      */
     protected $team;
 
     /**
+     * Contains the token used for sending invites
      * @var string
      */
     protected $token;
 
     /**
-     * @var
+     * Will contain the entire slack team's url
+     * @var string
+     */
+    protected $infoUrl;
+
+    /**
+     * 5 minute cache setting
+     */
+    const FIVE_MINUTES = 300;
+
+    /**
+     * Will contain the API JSON response with information about the slack's team
+     * @var string
      */
     protected $info;
+
+    /**
+     *
+     * @var
+     */
+    protected $cache;
 
     /**
      * Slack constructor.
      * @param $team
      * @param $token
+     * @param $cache
      */
-    public function __construct($team, $token)
+    public function __construct($team, $token, $cache)
     {
         $this->team = $team;
         $this->token = $token;
+        $this->cache = $cache;
+        $this->infoUrl = 'https://' . $this->team . '.slack.com/api/rtm.start?token=' . $this->token;
 
         $this->refresh();
     }
@@ -41,9 +64,11 @@ class Slack
      */
     public function refresh()
     {
-        $url = 'https://' . $this->team . '.slack.com/api/rtm.start?token=' . $this->token;
-        $info = file_get_contents($url);
-        $this->info = json_decode($info, true);
+        if (!$this->cache->fetch(md5($this->infoUrl))) {
+            $this->cache->store(md5($this->infoUrl), file_get_contents($this->infoUrl), self::FIVE_MINUTES);
+        }
+
+        $this->info = json_decode($this->cache->fetch(md5($this->infoUrl)), true);
     }
 
     /**
@@ -60,10 +85,10 @@ class Slack
      */
     public function getImageSrc($width = 132)
     {
-        if (! isset($this->info['team']['icon']['image_'.$width])) {
+        if (!isset($this->info['team']['icon']['image_' . $width])) {
             return null;
         }
-        return $this->info['team']['icon']['image_'.$width];
+        return $this->info['team']['icon']['image_' . $width];
     }
 
     /**
@@ -100,7 +125,7 @@ class Slack
     {
         $url = 'https://' . $this->team . '.slack.com/api/users.admin.invite';
 
-        $data = array ('token' => $this->token, 'email' => $email);
+        $data = array('token' => $this->token, 'email' => $email);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
