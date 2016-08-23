@@ -8,6 +8,7 @@ require __DIR__.'/prod.php';
 
 // enable the debug mode
 $app['debug'] = true;
+$app['env'] = 'dev';
 
 $app->register(new MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../var/logs/silex_dev.log',

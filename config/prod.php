@@ -8,3 +8,4 @@ $app['locale'] = 'NL';
 $app['slack.team'] = "devopscenter";
 $app['slack.token'] = "mwuahahahahaTHISisNOTmyREALtoken!";
 $app['slack.cache'] = __DIR__ . '/../var/cache/slack';
+$app['env'] = 'prod';

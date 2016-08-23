@@ -16,16 +16,13 @@ $app->match('/', function (Request $request) use ($app) {
         ->getForm();
 
     $avatars = [];
-
-
     foreach ($app['slack']->getInfo()['users'] as $user) {
         if ($user['is_bot'] == true) continue;
         if ($user['id'] == 'USLACKBOT') continue;
         $avatars[$user['name']] = $user['profile']['image_24'];
     }
 
-
-    return $app['twig']->render('index.html.twig', ['form' => $form->createView(), 'slack' => $app['slack'], 'avatars' => $avatars]);
+    return $app['twig']->render('index.html.twig', ['env' => $app['env'], 'form' => $form->createView(), 'slack' => $app['slack'], 'avatars' => $avatars]);
 })->bind('homepage');
 
 $app->get('/slack_invite', function (Request $request) use ($app) {
