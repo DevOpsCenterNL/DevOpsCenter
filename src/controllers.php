@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Email;
 
 $app->match('/', function (Request $request) use ($app) {
-
-
     /** @var \Symfony\Component\Form\Form $form */
     $form = $app['form.factory']->createBuilder(FormType::class, ['email' => ''])
         ->add('email', TextType::class, array(
@@ -16,11 +14,6 @@ $app->match('/', function (Request $request) use ($app) {
             'attr' => array('class' => 'form-control', 'placeholder' => 'your@email.com')
         ))
         ->getForm();
-    if ($form->isValid()) {
-        $data = $form->getData();
-        var_dump($data);
-    }
-    $form->handleRequest($request);
 
     $avatars = [];
 
@@ -34,6 +27,20 @@ $app->match('/', function (Request $request) use ($app) {
 
     return $app['twig']->render('index.html.twig', ['form' => $form->createView(), 'slack' => $app['slack'], 'avatars' => $avatars]);
 })->bind('homepage');
+
+$app->get('/slack_invite', function (Request $request) use ($app) {
+    $slack = $app['slack'];
+
+    if (!$request->request->has('email')) {
+        return new Response("No email address", 400);
+    }
+    $result = $slack->invite($request->request->get('email'));
+    if ($result['ok'] != "true") {
+        return new Response($result['error'], 400);
+    } else {
+        return new Response("ok", 200);
+    }
+})->bind('slack_invite')->method('POST');
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {

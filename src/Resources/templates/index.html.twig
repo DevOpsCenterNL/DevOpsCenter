@@ -34,13 +34,14 @@
     </div>
     <div class="row">
         <div class="col-lg-offset-4 col-lg-4  col-xs-offset-2 col-xs-8 text-center">
-            <form action="{{ path('homepage') }}" method="post">
+            <form action="{{ path('slack_invite') }}" method="post" id="inviteform">
                 <div class="row">
                     <div class="form-group">
-                        {{ form_widget(form) }}
+                        {#{{ form_widget(form) }}#}
+                        <input id="email" name="email" class="form-control" placeholder="your@email.com">
                     </div>
                     <button id="submitbutton" type="submit" class="btn btn-block btn-success"
-                            data-target="{{ path('homepage') }}">
+                            data-target="{{ path('slack_invite') }}">
                         <span class="glyphicon glyphicon-hand-right"></span> Send invite
                     </button>
                 </div>

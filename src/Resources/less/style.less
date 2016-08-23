@@ -25,6 +25,12 @@ footer {
   }
 }
 
+.text-shadow() {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=117, Color=#000000)";
+  text-shadow: 1px 2px 2px #000000;
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color=#000000);
+}
+
 header {
   background: url('../images/header.png');
   height: 350px;
@@ -33,12 +39,14 @@ header {
   -o-background-size: cover;
   background-size: cover;
   h1 {
+    .text-shadow();
     color: white;
     text-align: center;
     margin: auto auto;
     padding-top: 100px;
   }
   h2 {
+    .text-shadow();
     color: whitesmoke;
     text-align: center;
   }
